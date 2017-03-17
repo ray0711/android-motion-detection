@@ -1,4 +1,4 @@
-package com.jjoe64.motiondetection.motiondetection;
+package com.jjoe64.motiondetection;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -87,6 +87,8 @@ public abstract class ImageProcessing {
         return (new int[] { (int) h, (int) s, (int) l });
     }
 
+
+    private static  int[] hsl;
     /**
      * Decode a YUV420SP image to Luma.
      * 
@@ -100,11 +102,14 @@ public abstract class ImageProcessing {
      * @throws NullPointerException
      *             if yuv420sp byte array is NULL.
      */
-    public static int[] decodeYUV420SPtoLuma(byte[] yuv420sp, int width, int height) {
+    public static int[] decodeYUV420SPtoLuma(byte[] yuv420sp, int width, int height ) {
         if (yuv420sp == null) throw new NullPointerException();
 
         final int frameSize = width * height;
-        int[] hsl = new int[frameSize];
+
+        if(hsl == null || hsl.length != frameSize ) {
+            hsl = new int[frameSize];
+        }
 
         for (int j = 0, yp = 0; j < height; j++) {
             for (int i = 0; i < width; i++, yp++) {

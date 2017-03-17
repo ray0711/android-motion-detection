@@ -1,18 +1,13 @@
 package com.jjoe64.motiondetection;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.jjoe64.motiondetection.motiondetection.MotionDetector;
-import com.jjoe64.motiondetection.motiondetection.MotionDetectorCallback;
 
 public class MainActivity extends AppCompatActivity {
     private TextView txtStatus;
@@ -26,18 +21,21 @@ public class MainActivity extends AppCompatActivity {
 
         txtStatus = (TextView) findViewById(R.id.txtStatus);
 
-        motionDetector = new MotionDetector(this, (SurfaceView) findViewById(R.id.surfaceView));
+        motionDetector = new MotionDetector(this, null);
         motionDetector.setMotionDetectorCallback(new MotionDetectorCallback() {
             @Override
             public void onMotionDetected() {
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(80);
                 txtStatus.setText("Motion detected");
+                Toast toast = Toast.makeText(getApplicationContext(), "Motion detected", Toast.LENGTH_SHORT);
+                toast.show();
             }
 
             @Override
             public void onTooDark() {
-                txtStatus.setText("Too dark here");
+                Toast toast = Toast.makeText(getApplicationContext(), "Too dark for motion detection", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 

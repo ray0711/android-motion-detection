@@ -1,8 +1,9 @@
-package com.jjoe64.motiondetection.motiondetection;
+package com.jjoe64.motiondetection;
 
-//import android.util.Log;
+import android.util.Log;
 
 public class AggregateLumaMotionDetection implements IMotionDetection {
+    private final String TAG = AggregateLumaMotionDetection.class.getName();
 
     // private static final String TAG = "AggregateLumaMotionDetection";
 
@@ -49,6 +50,19 @@ public class AggregateLumaMotionDetection implements IMotionDetection {
         return different;
     }
 
+    public boolean detect(State oldState, State newState){
+        if(oldState == null){
+            Log.i(TAG,"No oldState:");
+            return false;
+        }
+
+        Comparer comparer = new Comparer(oldState, newState, mXBoxes, mYBoxes, mLeniency, mDebugMode);
+        boolean isDifferent = comparer.isDifferent();
+
+        Log.d(TAG,"Detection:"+ isDifferent);
+        return  isDifferent;
+    }
+
     /**
      * Detect motion using aggregate luma values. {@inheritDoc}
      */
@@ -79,6 +93,8 @@ public class AggregateLumaMotionDetection implements IMotionDetection {
 
         return motionDetected;
     }
+
+
 
     public void setLeniency(int l) {
         mLeniency = l;

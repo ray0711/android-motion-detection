@@ -1,4 +1,4 @@
-package com.jjoe64.motiondetection.motiondetection;
+package com.jjoe64.motiondetection;
 
 public interface IMotionDetection {
 
@@ -23,4 +23,5 @@ public interface IMotionDetection {
      *             if data integer array is NULL.
      */
     public boolean detect(int[] data, int width, int height);
+    public boolean detect(State oldState, State newState);
 }

@@ -1,4 +1,4 @@
-package com.jjoe64.motiondetection.motiondetection;
+package com.jjoe64.motiondetection;
 
 import android.graphics.Color;
 

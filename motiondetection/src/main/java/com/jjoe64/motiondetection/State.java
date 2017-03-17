@@ -1,4 +1,4 @@
-package com.jjoe64.motiondetection.motiondetection;
+package com.jjoe64.motiondetection;
 
 public class State {
 
@@ -6,6 +6,11 @@ public class State {
     private int width;
     private int height;
     private int average;
+
+    public State( int width, int height){
+        this.width = width;
+        this.height = height;
+    }
 
     public State(int[] data, int width, int height) {
         if (data == null) throw new NullPointerException();
