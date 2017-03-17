@@ -27,6 +27,10 @@ public class MotionDetector {
             isRunning.set(false);
         }
 
+        public boolean isRunning(){
+            return this.isRunning.get();
+        }
+
         @Override
         public void run() {
             AtomicReference<com.jjoe64.motiondetection.State> oldState = new AtomicReference<>();
@@ -83,8 +87,10 @@ public class MotionDetector {
                             oldState.set(newState);
                         }
 
-                        mCamera.addCallbackBuffer(imageBuffer);
-                        Log.d(TAG, "done image analysis");
+                        if(mCamera!=null) {
+                            mCamera.addCallbackBuffer(imageBuffer);
+                            Log.d(TAG, "done image analysis");
+                        }
                     }
                 }
                 try {
@@ -146,6 +152,9 @@ public class MotionDetector {
     }
 
     public void onResume() {
+        if(worker!=null && worker.isRunning()){
+            return;
+        }
         if (checkCameraHardware()) {
             mCamera = getCameraInstance();
             if(mCamera == null){
